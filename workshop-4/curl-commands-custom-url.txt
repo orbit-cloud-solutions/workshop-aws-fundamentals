@@ -1,0 +1,30 @@
+# GET (query parameter)
+curl "https://api-test.workshop.virtualcomputing.cz/dev/product?ProductID=123" \
+-H "x-api-key:tasUhVjofN6crbTc7lwYv1T9QEDWJ2HB7Hca5cym"
+
+# GET (path parameter)
+curl "https://api-test.workshop.virtualcomputing.cz/dev/product/123" \
+-H "x-api-key:tasUhVjofN6crbTc7lwYv1T9QEDWJ2HB7Hca5cym"
+
+# POST (Create)
+curl -X POST \
+"https://api-test.workshop.virtualcomputing.cz/dev/product" \
+-H "x-api-key:tasUhVjofN6crbTc7lwYv1T9QEDWJ2HB7Hca5cym" \
+-d '{
+    "ProductName": "Test Product",
+    "Price": 99.99
+}'
+
+# PUT (Update)
+curl -X PUT \
+"https://api-test.workshop.virtualcomputing.cz/dev/product/123" \
+-H "x-api-key:tasUhVjofN6crbTc7lwYv1T9QEDWJ2HB7Hca5cym" \
+-d '{
+    "ProductName": "Updated Product Name",
+    "Price": 199.99
+}'
+
+# DELETE
+curl -X DELETE \
+"https://api-test.workshop.virtualcomputing.cz/dev/product/123" \
+-H "x-api-key:tasUhVjofN6crbTc7lwYv1T9QEDWJ2HB7Hca5cym"
