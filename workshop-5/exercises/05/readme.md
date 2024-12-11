@@ -1,4 +1,4 @@
-# Exercise 4 - hosting React frontend
+# Exercise 5 - hosting React frontend
 
 ## login to EC2
     * login as ec2-user@<ip_address>
@@ -15,3 +15,6 @@
     * docker images # an image is created
     * docker run -d --name frontend -p 80:80 frontend
     * open your public IP address/hostname in browser
+
+## stoppping the container
+    * docker stop frontend
