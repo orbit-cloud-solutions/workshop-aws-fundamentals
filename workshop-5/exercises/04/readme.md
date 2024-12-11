@@ -1,4 +1,4 @@
-# Exercise 4 - passing environment varianbles
+# Exercise 4 - passing environment variables
 
 ## login to EC2
     * login as ec2-user@<ip_address>
