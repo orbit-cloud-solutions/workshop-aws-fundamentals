@@ -17,7 +17,7 @@
     * docker commit apache apache:saved # creates image from existing container
     * docker images # apache:saved image was created from container
     * you can backup using docker save if you need:
-    * docker save httpd:saved | gzip > httpd_saved.tgz # we have container backup now
+    * docker save apache:saved | gzip > httpd_saved.tgz # we have container backup now
     * ll -h
 
 ## stop
