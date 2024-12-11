@@ -14,3 +14,5 @@
     * docker build -t python . # the dot is important
     * docker images # an image is created
     * docker run --rm python
+    * docker run --rm -e NAME="Joe" python
+    * docker ps # nothing's left
