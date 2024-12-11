@@ -8,20 +8,24 @@
     * yum install git
     * git clone https://github.com/orbit-cloud-solutions/workshops-aws-fundamentals-code-base.git
 
-## exercise 02
+## exercise 03
     * cd workshops-aws-fundamentals-code-base/workshop-05/exercises/03
-    * cat Dockerfile
-    * docker build -t AL . # the dot is important
+    * cat Dockerfile # it's based on Amazon Linux
+    * docker build -t al . # the dot is important
     * docker images # an image is created
-    * docker run -d --name apache -p 80:80 apache
-    * docker ps # docker is running
-    * curl http://localhost # the page is returned
-    * open public IP address in your browser
+    * docker run -itd --name al al # now we are inside our container
+    * # -i means interactive, -t pseudo tty, -d detach
+    * docker ps # it is runnning
+    * docker exec -it al /bin/bash # runs shell in the container
+    * yum install whois # we can install a package interactively
+    * # this is normally never done, possibly for troubleshooting
+    * Ctrl+D # we disconnected from our docker
+    * docker ps # it's still running
 
 ## stop docker
-    * docker stop apache
+    * docker stop al
     * docker ps # no longer running
     * docker ps -a # but we have some stopped containers
-    * docker rm apache
-    * docker ps -a # apache docker is gone
+    * docker rm al
+    * docker ps -a # amazon linux docker is gone
     * docker images # but its image still exists
