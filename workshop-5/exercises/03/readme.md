@@ -1,4 +1,4 @@
-# Exercise 2 - using Docker to run website using Apache web server
+# Exercise 3 - interactive Docker
 
 ## login to EC2
     * login as ec2-user@<ip_address>
@@ -9,9 +9,9 @@
     * git clone https://github.com/orbit-cloud-solutions/workshops-aws-fundamentals-code-base.git
 
 ## exercise 02
-    * cd workshops-aws-fundamentals-code-base/workshop-05/exercises/02
+    * cd workshops-aws-fundamentals-code-base/workshop-05/exercises/03
     * cat Dockerfile
-    * docker build -t apache . # the dot is important
+    * docker build -t AL . # the dot is important
     * docker images # an image is created
     * docker run -d --name apache -p 80:80 apache
     * docker ps # docker is running
