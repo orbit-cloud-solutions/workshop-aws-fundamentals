@@ -1,4 +1,4 @@
-# Exercise 3 - interactive Docker, logs
+# Exercise 4 - passing environment varianbles
 
 ## login to EC2
     * login as ec2-user@<ip_address>
@@ -26,10 +26,6 @@
     * docker stop al
     * docker ps # no longer running
     * docker ps -a # but we have some stopped containers
-    
-## run docker again
-    * docker run -it -rm --name al al # remove docker when we are finished
-
-## cleanup
+    * docker rm al
     * docker ps -a # amazon linux docker is gone
     * docker images # but its image still exists

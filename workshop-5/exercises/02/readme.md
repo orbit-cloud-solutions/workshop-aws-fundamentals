@@ -17,6 +17,7 @@
     * docker ps # docker is running
     * curl http://localhost # the page is returned
     * open public IP address in your browser
+    * docker logs apache # displays container log
 
 ## stop docker
     * docker stop apache
