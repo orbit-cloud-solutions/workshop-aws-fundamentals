@@ -14,4 +14,4 @@
     * docker build -t frontend . # the dot is important
     * docker images # an image is created
     * docker run -d --name frontend -p 80:80 frontend
-    * docker ps # nothing's left
+    * open your public IP address/hostname in browser
