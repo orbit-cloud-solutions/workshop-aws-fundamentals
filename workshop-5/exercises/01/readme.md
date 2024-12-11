@@ -21,5 +21,5 @@
     * # systemctl enable docker
 
 ## run first container
-    * docker run hello-world
+    * docker run hello-world # it automatically does 'docker pull' if needed
     * docker images
