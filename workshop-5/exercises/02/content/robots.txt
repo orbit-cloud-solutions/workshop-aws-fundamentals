@@ -1,0 +1,10 @@
+User-agent: *
+Disallow: /wp-admin/
+Disallow: /wp-login.php
+Disallow: */tag/
+Disallow: */news_tag/
+Disallow: */event_location/
+Disallow: */download-ics.php
+Disallow: *wc-ajax=get_refreshed_fragments
+
+Sitemap: https://www.garrettmotion.com/sitemap_index.xml

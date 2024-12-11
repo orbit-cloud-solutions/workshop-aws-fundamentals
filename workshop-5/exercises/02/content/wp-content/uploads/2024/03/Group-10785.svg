@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="138" height="138" viewBox="0 0 138 138">
+  <defs>
+    <clipPath id="a">
+      <rect width="104" height="94" fill="none"></rect>
+    </clipPath>
+  </defs>
+  <g transform="translate(13848 -2760)">
+    <rect width="138" height="138" transform="translate(-13848 2760)" fill="none"></rect>
+    <g transform="translate(-13831 2782)">
+      <g clip-path="url(#a)">
+        <circle cx="22" cy="22" r="22" transform="translate(24 24)" fill="none" stroke="#ed1c24" stroke-linecap="round" stroke-miterlimit="10" stroke-width="4"></circle>
+        <circle cx="4" cy="4" r="4" transform="translate(42 42)" fill="none" stroke="#ed1c24" stroke-linecap="round" stroke-miterlimit="10" stroke-width="4"></circle>
+        <circle cx="44" cy="44" r="44" transform="translate(2 2)" fill="none" stroke="#000005" stroke-linecap="round" stroke-miterlimit="10" stroke-width="4"></circle>
+        <line x2="33.956" transform="translate(10 2)" fill="none" stroke="#000" stroke-linecap="round" stroke-miterlimit="10" stroke-width="4"></line>
+        <line x2="45.217" transform="translate(48 90)" fill="none" stroke="#000005" stroke-linecap="round" stroke-miterlimit="10" stroke-width="4"></line>
+        <line x2="5.217" transform="translate(88 62)" fill="none" stroke="#000005" stroke-linecap="round" stroke-miterlimit="10" stroke-width="4"></line>
+        <rect width="8" height="32" rx="1" transform="translate(94 60)" fill="none" stroke="#000005" stroke-linecap="round" stroke-miterlimit="10" stroke-width="4"></rect>
+        <line y1="8" transform="translate(46 32)" fill="none" stroke="#ed1c24" stroke-linecap="round" stroke-miterlimit="10" stroke-width="4"></line>
+        <line y1="8" transform="translate(46 52)" fill="none" stroke="#ed1c24" stroke-linecap="round" stroke-miterlimit="10" stroke-width="4"></line>
+        <line x1="6.928" y1="4" transform="translate(33.876 39)" fill="none" stroke="#ed1c24" stroke-linecap="round" stroke-miterlimit="10" stroke-width="4"></line>
+        <line x1="6.928" y1="4" transform="translate(51.196 49)" fill="none" stroke="#ed1c24" stroke-linecap="round" stroke-miterlimit="10" stroke-width="4"></line>
+        <line x1="6.928" y2="4" transform="translate(33.876 49)" fill="none" stroke="#ed1c24" stroke-linecap="round" stroke-miterlimit="10" stroke-width="4"></line>
+        <line x1="6.928" y2="4" transform="translate(51.196 39)" fill="none" stroke="#ed1c24" stroke-linecap="round" stroke-miterlimit="10" stroke-width="4"></line>
+        <path d="M10.055,48Q10,47.008,10,46" fill="none" stroke="#000005" stroke-linecap="round" stroke-miterlimit="10" stroke-width="4"></path>
+        <path d="M46,82A36.016,36.016,0,0,1,11.119,54.942" fill="none" stroke="#000005" stroke-linecap="round" stroke-miterlimit="10" stroke-width="4"></path>
+      </g>
+    </g>
+  </g>
+</svg>
