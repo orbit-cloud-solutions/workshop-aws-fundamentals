@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { v4 as uuidv4 } from 'uuid';  // Import uuid knihovny
+import { v4 as uuidv4 } from 'uuid';
 import './App.css';
 
 const apiUrl = 'https://vsteh4ih09.execute-api.eu-central-1.amazonaws.com/v1'; // Nahraďte svou URL API
@@ -11,12 +11,11 @@ function CrudApp() {
     ProductID: '',
     ProductName: '',
     Price: '',
-    CreatedAt: '', // Nezadané ručně
-    UpdatedAt: ''  // Nezadané ručně
+    CreatedAt: '',
+    UpdatedAt: ''
   });
   const [loading, setLoading] = useState(false);
 
-  // Získání seznamu položek
   const fetchItems = async () => {
     setLoading(true);
     try {
@@ -29,7 +28,6 @@ function CrudApp() {
     }
   };
 
-  // Získání jednotlivé položky podle ProductID
   const fetchItem = async (ProductID) => {
     setLoading(true);
     try {
@@ -42,30 +40,26 @@ function CrudApp() {
     }
   };
 
-  // Přidání nebo aktualizace položky
   const saveItem = async () => {
     setLoading(true);
-    const currentDate = new Date().toISOString(); // Aktuální čas v ISO formátu
+    const currentDate = new Date().toISOString();
 
     // Automatické nastavení CreatedAt a UpdatedAt
     const itemToSave = {
       ...currentItem,
       UpdatedAt: currentDate,
-      CreatedAt: currentItem.ProductID ? currentItem.CreatedAt : currentDate, // Pokud je ProductID, neaktualizujeme CreatedAt
+      CreatedAt: currentItem.ProductID ? currentItem.CreatedAt : currentDate
     };
 
     if (!itemToSave.ProductID) {
-      // Pokud neexistuje ProductID, vygenerujeme nové UUID
       itemToSave.ProductID = uuidv4();
     }
 
     try {
       if (itemToSave.ProductID) {
-        // Aktualizace položky
         await axios.put(`${apiUrl}/${itemToSave.ProductID}`, itemToSave);
         alert('Item updated successfully');
       } else {
-        // Vytvoření nové položky
         await axios.post(apiUrl, itemToSave);
         alert('Item created successfully');
       }
@@ -99,7 +93,7 @@ function CrudApp() {
   };
 
   useEffect(() => {
-    fetchItems(); // Načíst položky při prvním renderování
+    fetchItems();
   }, []);
 
   return (
