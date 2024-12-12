@@ -14,29 +14,6 @@
     * Create private repository
     * Repository name: xxxx/frontend
     * Create
-    * select your repo, Permissions, Edit, Add statement
-    * Edit 
-    * Policy JSON
-    * Paste this:
-{
-  "Version": "2008-10-17",
-  "Statement": [
-    {
-      "Sid": "AllowAllInAccount",
-      "Effect": "Allow",
-      "Principal": "*",
-      "Action": [
-        "ecr:BatchGetImage",
-        "ecr:GetDownloadUrlForLayer"
-      ],
-      "Condition": {
-        "StringEquals": {
-          "aws:PrincipalAccount": "108782094079"
-        }
-      }
-    }
-  ]
-}
 
 ## add permissions to your EC2 instance
     * AWS Console > IAM > Roles > select role of your EC2 instance (wksp-xxxx-ec2-iam-role)
