@@ -9,15 +9,45 @@
     * yum install git
     * git clone https://github.com/orbit-cloud-solutions/workshops-aws-fundamentals-code-base.git
 
-## build docker image
-    * cd workshops-aws-fundamentals-code-base/workshop-06/exercises/02
-    * cat Dockerfile
-    * docker build -t frontend . # the dot is important
-    * docker images # frontend image is created
-
 ## create ECR repository
     * AWS Console > Elastic Container Registry > Create a repository
-    * name: xxxx/frontend
+    * Create private repository
+    * Repository name: xxxx/frontend
     * Create
+    * select your repo, Permissions, Edit, Add statement
+    * Edit 
+    * Policy JSON
+    * Paste this:
+{
+  "Version": "2008-10-17",
+  "Statement": [
+    {
+      "Sid": "AllowAllInAccount",
+      "Effect": "Allow",
+      "Principal": "*",
+      "Action": [
+        "ecr:BatchGetImage",
+        "ecr:GetDownloadUrlForLayer"
+      ],
+      "Condition": {
+        "StringEquals": {
+          "aws:PrincipalAccount": "108782094079"
+        }
+      }
+    }
+  ]
+}
 
-## upload docker image to repository
+## add permissions to your EC2 instance
+    * AWS Console > IAM > Roles > select role of your EC2 instance (wksp-xxxx-ec2-iam-role)
+    * attach managed permission AmazonEC2ContainerRegistryFullAccess
+
+## build and upload docker image to repository
+    * login to your EC2 as root
+    * cd workshops-aws-fundamentals-code-base/workshop-06/exercises/02
+    * cat Dockerfile
+    * select your ECR repository in AWS Console > View Push commands
+    * copy and paste command 1-4 to your EC2 shell
+    * Close
+    * go to AWS Console > ECR > your repo
+    * you should see your image there
