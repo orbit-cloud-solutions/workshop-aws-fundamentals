@@ -13,4 +13,11 @@
     * cd workshops-aws-fundamentals-code-base/workshop-06/exercises/02
     * cat Dockerfile
     * docker build -t frontend . # the dot is important
-    * docker images # an image is created
+    * docker images # frontend image is created
+
+## create ECR repository
+    * AWS Console > Elastic Container Registry > Create a repository
+    * name: xxxx/frontend
+    * Create
+
+## upload docker image to repository
