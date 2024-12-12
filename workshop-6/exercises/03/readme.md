@@ -9,7 +9,7 @@
     * git clone https://github.com/orbit-cloud-solutions/workshops-aws-fundamentals-code-base.git
 
 ## create ECS Task definition
-    * AWS > ECS > Task deinitions > Create new task definition
+    * AWS > ECS > Task definitions > Create new task definition
     * Task definition family: wksp-xxxx-ecs-task
     * Launch type: AWS Fargate
     * CPU: .25 vCPU
