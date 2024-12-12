@@ -48,3 +48,5 @@
 
 ## check the application
     * go to to your ALB https port (https://xxxx-alb.workshop.virtualcomputing.cz/)
+    * go to to your ALB http port (http://xxxx-alb.workshop.virtualcomputing.cz/)
+    * what happened?
