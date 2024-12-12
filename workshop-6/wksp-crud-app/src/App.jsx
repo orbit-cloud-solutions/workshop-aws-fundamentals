@@ -1,0 +1,149 @@
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { v4 as uuidv4 } from 'uuid';  // Import uuid knihovny
+import './App.css';
+
+const apiUrl = 'https://vsteh4ih09.execute-api.eu-central-1.amazonaws.com/v1'; // Nahraďte svou URL API
+
+function CrudApp() {
+  const [items, setItems] = useState([]);
+  const [currentItem, setCurrentItem] = useState({
+    ProductID: '',
+    ProductName: '',
+    Price: '',
+    CreatedAt: '', // Nezadané ručně
+    UpdatedAt: ''  // Nezadané ručně
+  });
+  const [loading, setLoading] = useState(false);
+
+  // Získání seznamu položek
+  const fetchItems = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.get(apiUrl);
+      setItems(response.data);
+    } catch (error) {
+      console.error('Error fetching items:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Získání jednotlivé položky podle ProductID
+  const fetchItem = async (ProductID) => {
+    setLoading(true);
+    try {
+      const response = await axios.get(`${apiUrl}/${ProductID}`);
+      setCurrentItem(response.data);
+    } catch (error) {
+      console.error('Error fetching item:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Přidání nebo aktualizace položky
+  const saveItem = async () => {
+    setLoading(true);
+    const currentDate = new Date().toISOString(); // Aktuální čas v ISO formátu
+
+    // Automatické nastavení CreatedAt a UpdatedAt
+    const itemToSave = {
+      ...currentItem,
+      UpdatedAt: currentDate,
+      CreatedAt: currentItem.ProductID ? currentItem.CreatedAt : currentDate, // Pokud je ProductID, neaktualizujeme CreatedAt
+    };
+
+    if (!itemToSave.ProductID) {
+      // Pokud neexistuje ProductID, vygenerujeme nové UUID
+      itemToSave.ProductID = uuidv4();
+    }
+
+    try {
+      if (itemToSave.ProductID) {
+        // Aktualizace položky
+        await axios.put(`${apiUrl}/${itemToSave.ProductID}`, itemToSave);
+        alert('Item updated successfully');
+      } else {
+        // Vytvoření nové položky
+        await axios.post(apiUrl, itemToSave);
+        alert('Item created successfully');
+      }
+      setCurrentItem({
+        ProductID: '',
+        ProductName: '',
+        Price: '',
+        CreatedAt: '',
+        UpdatedAt: ''
+      });
+      fetchItems();
+    } catch (error) {
+      console.error('Error saving item:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Smazání položky
+  const deleteItem = async (ProductID) => {
+    setLoading(true);
+    try {
+      await axios.delete(`${apiUrl}/${ProductID}`);
+      alert('Item deleted successfully');
+      fetchItems();
+    } catch (error) {
+      console.error('Error deleting item:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchItems(); // Načíst položky při prvním renderování
+  }, []);
+
+  return (
+    <div className="crud-container">
+      <h1>Workshop CRUD App</h1>
+      {loading && <p>Loading...</p>}
+
+      {/* Seznam položek */}
+      <div className="items-list">
+        <h2>Items</h2>
+        <ul>
+          {items.map(item => (
+            <li key={item.ProductID}>
+              {item.ProductName} - ${item.Price}
+              <div className="button-container">
+                <button onClick={() => fetchItem(item.ProductID)}>Edit</button>
+                <button onClick={() => deleteItem(item.ProductID)}>Delete</button>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      {/* Formulář pro přidání/aktualizaci položky */}
+      <div className="item-form">
+        <h2>{currentItem.ProductID ? 'Edit Product' : 'Add Product'}</h2>
+        <input
+          type="text"
+          placeholder="Product Name"
+          value={currentItem.ProductName}
+          onChange={(e) => setCurrentItem({ ...currentItem, ProductName: e.target.value })}
+        />
+        <input
+          type="number"
+          placeholder="Price"
+          value={currentItem.Price}
+          onChange={(e) => setCurrentItem({ ...currentItem, Price: e.target.value })}
+        />
+        <button onClick={saveItem}>
+          {currentItem.ProductID ? 'Update' : 'Create'}
+        </button>
+      </div>
+    </div>
+  );
+}
+
+export default CrudApp;
