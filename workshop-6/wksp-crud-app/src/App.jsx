@@ -44,7 +44,6 @@ function CrudApp() {
     setLoading(true);
     const currentDate = new Date().toISOString();
 
-    // Automatické nastavení CreatedAt a UpdatedAt
     const itemToSave = {
       ...currentItem,
       UpdatedAt: currentDate,
@@ -78,7 +77,6 @@ function CrudApp() {
     }
   };
 
-  // Smazání položky
   const deleteItem = async (ProductID) => {
     setLoading(true);
     try {
