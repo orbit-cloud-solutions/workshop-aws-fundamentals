@@ -3,7 +3,7 @@ import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
 import './App.css';
 
-const apiUrl = 'https://vsteh4ih09.execute-api.eu-central-1.amazonaws.com/v1'; // Nahraďte svou URL API
+const apiUrl = 'https://vsteh4ih09.execute-api.eu-central-1.amazonaws.com/v1'; // update with your URL API
 
 function CrudApp() {
   const [items, setItems] = useState([]);
