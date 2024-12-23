@@ -15,10 +15,12 @@ params = {
 # Create an app instance
 app = cdk.App()
 
+ddb_stack_name = f"wksp-{params["name_shortcut"]}-ddb-cdk-stack"
+
 # Pass the params directly to the DdbCdkStack
 DdbCdkStack(
     app, 
-    f"wksp-{params["name_shortcut"]}-ddb-cdk-stack",
+    ddb_stack_name,
     name_shortcut=params["name_shortcut"],
     table_name=params["table_name"],
     billing_mode=params["billing_mode"],
