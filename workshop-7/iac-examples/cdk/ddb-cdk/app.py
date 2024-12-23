@@ -18,7 +18,7 @@ app = cdk.App()
 # Pass the params directly to the DdbCdkStack
 DdbCdkStack(
     app, 
-    "DdbCdkStack",
+    f"wksp-{params["name_shortcut"]}-ddb-cdk-stack",
     name_shortcut=params["name_shortcut"],
     table_name=params["table_name"],
     billing_mode=params["billing_mode"],
