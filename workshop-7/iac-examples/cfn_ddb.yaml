@@ -1,0 +1,68 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: CloudFormation template to create a DynamoDB table.
+
+Metadata: 
+  Author: FilipKamenar
+
+Parameters:
+  NameShortcut:
+    Type: String
+    Description: Your name shortcut, ie Filip Kamenar -> fika
+  
+  BillingMode:
+    Type: String
+    Description: Define charge model for DDB.
+    Default: PAY_PER_REQUEST
+    AllowedValues:
+      - PROVISIONED
+      - PAY_PER_REQUEST
+  
+  TableClass:
+    Type: String
+    Description: Class of the DynamoDB table
+    Default: STANDARD_INFREQUENT_ACCESS
+    AllowedValues:
+      - STANDARD_INFREQUENT_ACCESS
+      - STANDARD
+  
+  TableName:
+    Type: String
+    Description: Name of the DynamoDB table
+    Default: product
+
+  PartitionKeyName:
+    Type: String
+    Default: ProductID
+    Description: Name of the partition key (primary key)
+
+  PartitionKeyType:
+    Type: String
+    Default: S
+    AllowedValues:
+      - S  # String
+      - N  # Number
+      - B  # Binary
+    Description: Data type of the partition key (S, N, B)
+
+Resources:
+  DynamoDBTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      BillingMode: !Ref BillingMode
+      TableName: !Join [ '-', ["wksp", !Ref NameShortcut, "dynamodb", !Ref TableName, "table-cfn"]] # Table name from parameters
+      TableClass: !Ref TableClass
+      AttributeDefinitions:
+        - AttributeName: !Ref PartitionKeyName # Primary key name
+          AttributeType: !Ref PartitionKeyType # Primary key type
+      KeySchema:
+        - AttributeName: !Ref PartitionKeyName # Key schema for partition key
+          KeyType: HASH # Partition key
+
+Outputs:
+  TableArn:
+    Description: ARN of the created DynamoDB table
+    Value: !GetAtt DynamoDBTable.Arn
+
+  TableName:
+    Description: Name of the DynamoDB table
+    Value: !Ref DynamoDBTable
