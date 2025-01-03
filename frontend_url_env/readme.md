@@ -8,5 +8,5 @@ BACKEND_URL
 
 ## notes
 /scripts/start.sh will:
-    * set backend url in js file
-    * start nginx
+* set backend url in js file
+* start nginx
