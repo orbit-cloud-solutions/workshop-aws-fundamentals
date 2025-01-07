@@ -117,7 +117,7 @@ class EcsAlbStack(Stack):
 
         # Add a listener for HTTP (80) with redirection to HTTPS
         alb.add_redirect(source_port=80, target_port=443)
-        """
+        
         applicationTargetGroup = elbv2.ApplicationTargetGroup(
             self,
             "TargetGroupECS",
@@ -129,7 +129,7 @@ class EcsAlbStack(Stack):
         )
 
         service.attach_to_application_target_group(target_group=applicationTargetGroup)
-
+        """
         # Add a listener for HTTPS (443)
         listener = alb.add_listener(
             f"{name_shortcut}-https-listener",
