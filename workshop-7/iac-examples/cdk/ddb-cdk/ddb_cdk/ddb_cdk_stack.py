@@ -1,6 +1,7 @@
 from aws_cdk import (
     Stack,
     aws_dynamodb as dynamodb,
+    RemovalPolicy,  # Import RemovalPolicy
     CfnOutput
 )
 from constructs import Construct
@@ -21,13 +22,14 @@ class DdbCdkStack(Stack):
         table = dynamodb.Table(
             self, 
             "DynamoDBTable", 
-            table_name=f"wksp-{name_shortcut}-dynamodb-{table_name}-table-sdk",
+            table_name=f"wksp-{name_shortcut}-dynamodb-{table_name}-table-cdk",
             partition_key=dynamodb.Attribute(
                 name=partition_key_name,
                 type=partition_key_type_enum,
             ),
             billing_mode=billing_mode_enum,
             table_class=table_class_enum,
+            removal_policy=RemovalPolicy.DESTROY  # Use RemovalPolicy.DESTROY
         )
 
         # Optionally, add additional configurations or outputs
