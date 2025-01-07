@@ -127,9 +127,9 @@ class EcsAlbStack(Stack):
             port=80,
             vpc=vpc
         )
-
-        service.attach_to_application_target_group(target_group=applicationTargetGroup)
         """
+        service.attach_to_application_target_group(target_group=applicationTargetGroup)
+        
         # Add a listener for HTTPS (443)
         listener = alb.add_listener(
             f"{name_shortcut}-https-listener",
