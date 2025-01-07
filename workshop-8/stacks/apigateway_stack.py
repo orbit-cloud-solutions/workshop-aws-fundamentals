@@ -5,7 +5,8 @@ from aws_cdk import (
     aws_route53 as route53,
     aws_route53_targets as targets,
     aws_lambda as _lambda,
-    Fn
+    Fn,
+    CfnOutput
 )
 from constructs import Construct
 
