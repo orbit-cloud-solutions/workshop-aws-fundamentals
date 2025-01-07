@@ -64,7 +64,7 @@ class LambdaStack(Stack):
             lambda_role.add_managed_policy(policy)
 
         # Create the Lambda function
-        _lambda.Function(self, function_name,
+        _lambda.Function(self, f"{lambda_name}-lambda-function",
             function_name=function_name,
             runtime=_lambda.Runtime.PYTHON_3_13,
             handler="app.lambda_handler",  # Assuming the handler is named 'lambda_handler' in each 'app.py'
