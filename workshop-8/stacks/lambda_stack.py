@@ -13,8 +13,8 @@ class LambdaStack(Stack):
     def __init__(self, scope: Construct, construct_id: str, name_shortcut: str, **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
 
-         # Import the VPC ID from the SourceStack
-        ddb_table_name = Fn.import_value("DynamoDBTableName")
+         # Import the DDB name from the DynamoDbStack 
+        ddb_table_name = Fn.import_value(f"wksp-{name_shortcut}-ddb-cdk-stack-table-name")
         
         # Lambda function names and associated AWS managed policies
         lambda_policies = {

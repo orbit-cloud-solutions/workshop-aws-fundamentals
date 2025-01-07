@@ -33,4 +33,4 @@ class DynamoDbStack(Stack):
         )
 
         # Optionally, add additional configurations or outputs
-        CfnOutput(self, "DynamoDBTableName", value=table.table_name)
+        CfnOutput(self, "DynamoDBTableName", value=table.table_name, export_name=f"wksp-{name_shortcut}-ddb-cdk-stack-table-name")
