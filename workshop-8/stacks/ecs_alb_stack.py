@@ -50,7 +50,7 @@ class EcsAlbStack(Stack):
             retention=logs.RetentionDays.ONE_DAY,
             removal_policy=RemovalPolicy.DESTROY,
         )
-
+        """
         task_definition = ecs.FargateTaskDefinition(
             self,
             "ECSTaskDefinition",
@@ -70,3 +70,4 @@ class EcsAlbStack(Stack):
             ),
             port_mappings=[ecs.PortMapping(container_port=80)],
         )
+        """
