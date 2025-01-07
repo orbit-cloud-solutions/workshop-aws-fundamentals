@@ -115,6 +115,21 @@ class EcsAlbStack(Stack):
             security_group = alb_security_group
         )
 
+        # Add a listener for HTTP (80) with redirection to HTTPS
+        alb.add_redirect(source_port=80, target_port=443)
+        """
+        applicationTargetGroup = elbv2.ApplicationTargetGroup(
+            self,
+            "TargetGroupECS",
+            target_type=elbv2.TargetType.IP,
+            target_group_name=f"wksp-{name_shortcut}-alb-tg-cdk",
+            protocol=elbv2.ApplicationProtocol.HTTP,
+            port=80,
+            vpc=vpc
+        )
+
+        service.attach_to_application_target_group(target_group=applicationTargetGroup)
+
         # Add a listener for HTTPS (443)
         listener = alb.add_listener(
             f"{name_shortcut}-https-listener",
@@ -123,16 +138,4 @@ class EcsAlbStack(Stack):
                 elbv2.ListenerCertificate.from_certificate_arn(app_certificate_arn)
             ],
         )
-
-        # Add a listener for HTTP (80) with redirection to HTTPS
-        alb.add_redirect(source_port=80, target_port=443)
-
-        # Add the Fargate service as a target for the ALB listener
-        listener.add_targets(
-            f"{name_shortcut}-alb-target", port=container_port, targets=[service]
-        )
-
-        # Output the Load Balancer DNS name
-        self.add_output(
-            f"{name_shortcut}-alb-dns-name", value=alb.load_balancer_dns_name
-        )
+        """
