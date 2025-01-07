@@ -60,3 +60,13 @@ class EcsAlbStack(Stack):
             execution_role=ecs_execution_role,
             task_role=ecs_execution_role,
         )
+
+        # Add a container to the task definition
+        container = task_definition.add_container(
+            f"{name_shortcut}-container",
+            image=ecs.ContainerImage.from_registry(container_uri),
+            logging=ecs.LogDriver.aws_logs(
+                stream_prefix=f"{name_shortcut}-logs", log_group=log_group
+            ),
+            port_mappings=[ecs.PortMapping(container_port=80)],
+        )
