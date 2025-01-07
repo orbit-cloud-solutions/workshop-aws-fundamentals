@@ -114,3 +114,6 @@ class ApiGatewayStack(Stack):
             record_name=f"{name_shortcut}.api",
             target=route53.RecordTarget.from_alias(targets.ApiGateway(api)),
         )
+
+        # Create Output
+        CfnOutput(self, f"{name_shortcut}-api-gateway-url", value=lambda_function.function_arn, export_name=f"wksp-{name_shortcut}-apigateway-cdk-stack-url")

@@ -15,6 +15,9 @@ class EcsAlbStack(Stack):
                  container_port: int, app_certificate_arn: str, vpc_id: str, **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
 
+        # Import the API Gateway URL from the ApiGatewayStack 
+        apigateway_url = Fn.import_value(f"wksp-{name_shortcut}-apigateway-cdk-stack-url")
+
         # Fetch the existing VPC
         vpc = ec2.Vpc.from_lookup(self, "ExistingVpc", vpc_id=vpc_id)
 
@@ -69,6 +72,7 @@ class EcsAlbStack(Stack):
                 stream_prefix=f"{name_shortcut}-logs", log_group=log_group
             ),
             port_mappings=[ecs.PortMapping(container_port=80)],
+            environment={"BACKEND_URL": apigateway_url},
         )
 
         ecs_security_group = ec2.SecurityGroup(
@@ -79,7 +83,7 @@ class EcsAlbStack(Stack):
             description="Security Group for the workshop ECS cluster.",
             security_group_name=f"wksp-{name_shortcut}-ecs-sg-cdk",
         )
-
+        """
         service = ecs.FargateService(
             self,
             "EcsFargateService",
@@ -89,6 +93,7 @@ class EcsAlbStack(Stack):
             desired_count=1,
             service_name=f"wksp-{name_shortcut}-ecs-service-cdk",
         )
+        """
 
         alb_security_group = ec2.SecurityGroup(
             self,
