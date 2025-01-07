@@ -1,10 +1,12 @@
 import json
 import uuid
 import boto3
+import os
 from datetime import datetime
 
 dynamodb = boto3.resource('dynamodb')
-table = dynamodb.Table('wksp-kavr-dynamodb-product-table')
+TABLE_NAME = os.environ["TABLE_NAME"]
+table = dynamodb.Table(TABLE_NAME)
 
 def lambda_handler(event, context):
     body = json.loads(event['body'])

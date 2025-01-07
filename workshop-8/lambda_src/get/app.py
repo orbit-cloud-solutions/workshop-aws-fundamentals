@@ -1,9 +1,11 @@
 import json
 import boto3
+import os
 from botocore.exceptions import ClientError
 
 dynamodb = boto3.resource('dynamodb')
-table = dynamodb.Table('wksp-kavr-dynamodb-product-table')
+TABLE_NAME = os.environ["TABLE_NAME"]
+table = dynamodb.Table(TABLE_NAME)
 
 def lambda_handler(event, context):
     print(event)
