@@ -55,7 +55,7 @@ class LambdaStack(Stack):
         lambda_role = iam.Role(self, f"{lambda_name}-execution-role",
             assumed_by=iam.ServicePrincipal("lambda.amazonaws.com"),
             managed_policies=[
-                iam.ManagedPolicy.from_aws_managed_policy_name("AWSLambdaBasicExecutionRole"),
+                iam.ManagedPolicy.from_managed_policy_arn(self, lambda_name, "AWSLambdaBasicExecutionRole"),
             ]
         )
 
