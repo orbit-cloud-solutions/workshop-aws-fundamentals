@@ -70,4 +70,32 @@ class EcsAlbStack(Stack):
             ),
             port_mappings=[ecs.PortMapping(container_port=80)],
         )
+
+        ecs_security_group = ec2.SecurityGroup(
+            self,
+            "SecurityGroupApp",
+            vpc=vpc,
+            allow_all_outbound=True,
+            description="Security Group for the workshop ECS cluster.",
+            security_group_name=f"wksp-{name_shortcut}-ecs-sg-cdk",
+        )
+
+        service = ecs.FargateService(
+            self,
+            "EcsFargateService",
+            cluster=cluster,
+            security_groups=[ecs_security_group],
+            task_definition=task_definition,
+            desired_count=1,
+            service_name=f"wksp-{name_shortcut}-ecs-service-cdk",
+        )
+
+        alb_security_group = ec2.SecurityGroup(
+            self,
+            "SecurityGroupApp",
+            vpc=vpc,
+            allow_all_outbound=True,
+            description="Security Group for the workshop ALB.",
+            security_group_name=f"wksp-{name_shortcut}-alb-sg-cdk",
+        )
         
