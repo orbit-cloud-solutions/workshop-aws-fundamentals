@@ -116,4 +116,4 @@ class ApiGatewayStack(Stack):
         )
 
         # Create Output
-        CfnOutput(self, f"{name_shortcut}-api-gateway-url", value=lambda_function.function_arn, export_name=f"wksp-{name_shortcut}-apigateway-cdk-stack-url")
+        CfnOutput(self, f"{name_shortcut}-api-gateway-url", value=api.url, export_name=f"wksp-{name_shortcut}-apigateway-cdk-stack-url")
