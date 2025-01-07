@@ -41,15 +41,13 @@ class ApiGatewayStack(Stack):
             endpoint_configuration=apigateway.EndpointConfiguration(
                 types=[apigateway.EndpointType.REGIONAL]
             ),
-            binary_media_types=["multipart/form-data", "*/*"],
             domain_name=apigateway.DomainNameOptions(
                 domain_name=f"{name_shortcut}.api.{route53_zone_name}", # i.e fika.api.workshop.virtualcomputing.cz
                 certificate=acm.Certificate.from_certificate_arn(
                     self, "cert", api_certificate_arn
                 ),
                 endpoint_type=apigateway.EndpointType.REGIONAL,
-            ),
-            disable_execute_api_endpoint=True,
+            )
         )
 
         # Add root resource method
@@ -101,6 +99,24 @@ class ApiGatewayStack(Stack):
             add_method(
                 method["resource"], method["http_method"], method.get("integration")
             )
+
+        # Create a deployment for the API
+        deployment = apigateway.Deployment(
+            self,
+            "ApiDeployment",
+            api=api
+        )
+
+        # Create a stage named 'v1' linked to the deployment
+        v1_stage = apigateway.Stage(
+            self,
+            "v1Stage",
+            deployment=deployment,
+            stage_name="v1"
+        )
+
+        # Associate the deployment with the API
+        deployment.add_stage(v1_stage)
 
         # add route 53 record:
         zone = route53.HostedZone.from_hosted_zone_attributes(
