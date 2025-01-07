@@ -19,23 +19,18 @@ class LambdaStack(Stack):
         # Lambda function names and associated AWS managed policies
         lambda_policies = {
             'delete': [
-                iam.ManagedPolicy.from_managed_policy_arn(self, "ManagedPolicyDDBDelete", "arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess"),
-                iam.ManagedPolicy.from_managed_policy_arn(self, "ManagedPolicyLambdaDelete", "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole")
+                iam.ManagedPolicy.from_aws_managed_policy_name("AmazonDynamoDBFullAccess")
             ],
             'get': [
-                iam.ManagedPolicy.from_managed_policy_arn(self, "ManagedPolicyDDBGet", "arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess"),
-                iam.ManagedPolicy.from_managed_policy_arn(self, "ManagedPolicyLambdaGet", "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole")
+                iam.ManagedPolicy.from_aws_managed_policy_name("AmazonDynamoDBFullAccess")
             ],
             'list': [
-                iam.ManagedPolicy.from_managed_policy_arn(self, "ManagedPolicyDDBList", "arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess"),
-                iam.ManagedPolicy.from_managed_policy_arn(self, "ManagedPolicyLambdaList", "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole")
+                iam.ManagedPolicy.from_aws_managed_policy_name("AmazonDynamoDBFullAccess")
             ],
-            'options': [
-                iam.ManagedPolicy.from_managed_policy_arn(self, "ManagedPolicyLambdaOptions", "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole")
-            ],
+            'options': []
+            ,
             'update': [
-                iam.ManagedPolicy.from_managed_policy_arn(self, "ManagedPolicyDDBUpdate", "arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess"),
-                iam.ManagedPolicy.from_managed_policy_arn(self, "ManagedPolicyLambdaUpdate", "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole")
+                iam.ManagedPolicy.from_aws_managed_policy_name("AmazonDynamoDBFullAccess")
             ]
         }
 
@@ -60,7 +55,7 @@ class LambdaStack(Stack):
         lambda_role = iam.Role(self, f"{lambda_name}-execution-role",
             assumed_by=iam.ServicePrincipal("lambda.amazonaws.com"),
             managed_policies=[
-                iam.ManagedPolicy.from_aws_managed_policy_name("service-role/AWSLambdaBasicExecutionRole"),
+                iam.ManagedPolicy.from_aws_managed_policy_name("AWSLambdaBasicExecutionRole"),
             ]
         )
 
