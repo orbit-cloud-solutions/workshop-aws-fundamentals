@@ -83,18 +83,17 @@ class EcsAlbStack(Stack):
             description="Security Group for the workshop ECS cluster.",
             security_group_name=f"wksp-{name_shortcut}-ecs-sg-cdk",
         )
-        """
+        
         service = ecs.FargateService(
             self,
             "EcsFargateService",
             cluster=cluster,
             security_groups=[ecs_security_group],
             task_definition=task_definition,
-            desired_count=1,
+            desired_count=0,
             service_name=f"wksp-{name_shortcut}-ecs-service-cdk",
         )
-        """
-
+        
         alb_security_group = ec2.SecurityGroup(
             self,
             "SecurityGroupAlb",
