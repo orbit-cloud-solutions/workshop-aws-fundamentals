@@ -33,7 +33,7 @@ env = cdk.Environment(account=params["aws_account"], region=params["aws_region"]
 ddb_stack_name = f"wksp-{params['name_shortcut']}-ddb-cdk-stack"
 lambda_stack_name = f"wksp-{params['name_shortcut']}-lambda-cdk-stack"
 apigateway_stack_name = f"wksp-{params['name_shortcut']}-apigateway-cdk-stack"
-ecs_stack_name = f"wksp-{params['name_shortcut']}-ecs-cdk-stack"
+ecs_alb_stack_name = f"wksp-{params['name_shortcut']}-ecs-alb-cdk-stack"
 
 dynamodbStack = DynamoDbStack(
     app, 
@@ -66,7 +66,7 @@ apigatewayStack = ApiGatewayStack(
 
 ecsAlbStack = EcsAlbStack(
     app,
-    ecs_stack_name,
+    ecs_alb_stack_name,
     env=env,
     name_shortcut=params["name_shortcut"],
     ecr_repository_arn=params["ecr_repository_arn"],
