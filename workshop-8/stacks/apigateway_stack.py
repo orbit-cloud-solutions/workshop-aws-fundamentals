@@ -100,24 +100,6 @@ class ApiGatewayStack(Stack):
                 method["resource"], method["http_method"], method.get("integration")
             )
 
-        # Create a deployment for the API
-        deployment = apigateway.Deployment(
-            self,
-            "ApiDeployment",
-            api=api
-        )
-
-        # Create a stage named 'v1' linked to the deployment
-        v1_stage = apigateway.Stage(
-            self,
-            "v1Stage",
-            deployment=deployment,
-            stage_name="v1"
-        )
-
-        # Associate the deployment with the API
-        deployment.add_stage(v1_stage)
-
         # add route 53 record:
         zone = route53.HostedZone.from_hosted_zone_attributes(
             self,
