@@ -5,6 +5,7 @@ from aws_cdk import (
     RemovalPolicy,
     aws_iam as iam,
     aws_logs as logs,
+    Fn
 )
 from constructs import Construct
 
