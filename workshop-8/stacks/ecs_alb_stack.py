@@ -5,7 +5,8 @@ from aws_cdk import (
     RemovalPolicy,
     aws_iam as iam,
     aws_logs as logs,
-    Fn
+    Fn,
+    aws_elasticloadbalancingv2 as elbv2
 )
 from constructs import Construct
 
@@ -104,3 +105,34 @@ class EcsAlbStack(Stack):
             security_group_name=f"wksp-{name_shortcut}-alb-sg-cdk",
         )
         
+        # Create the Application Load Balancer (ALB)
+        alb = elbv2.ApplicationLoadBalancer(
+            self,
+            f"{name_shortcut}-alb",
+            vpc=vpc,
+            internet_facing=True,
+            load_balancer_name=f"wksp-{name_shortcut}-alb-cdk",
+            security_group = alb_security_group
+        )
+
+        # Add a listener for HTTPS (443)
+        listener = alb.add_listener(
+            f"{name_shortcut}-https-listener",
+            port=443,
+            certificates=[
+                elbv2.ListenerCertificate.from_certificate_arn(app_certificate_arn)
+            ],
+        )
+
+        # Add a listener for HTTP (80) with redirection to HTTPS
+        alb.add_redirect(source_port=80, target_port=443)
+
+        # Add the Fargate service as a target for the ALB listener
+        listener.add_targets(
+            f"{name_shortcut}-alb-target", port=container_port, targets=[service]
+        )
+
+        # Output the Load Balancer DNS name
+        self.add_output(
+            f"{name_shortcut}-alb-dns-name", value=alb.load_balancer_dns_name
+        )
