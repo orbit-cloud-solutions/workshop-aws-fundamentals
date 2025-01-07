@@ -17,9 +17,10 @@ params = {
 app = cdk.App()
 
 ddb_stack_name = f"wksp-{params['name_shortcut']}-ddb-cdk-stack"
+lambda_stack_name = f"wksp-{params['name_shortcut']}-lambda-cdk-stack"
 
 # Pass the params directly to the DdbCdkStack
-DynamoDbStack(
+dynamodbStack = DynamoDbStack(
     app, 
     ddb_stack_name,
     name_shortcut=params["name_shortcut"],
@@ -30,6 +31,10 @@ DynamoDbStack(
     partition_key_type=params["partition_key_type"]
 )
 
+lambdaStack = LambdaStack(
+    app,
+    lambda_stack_name,
+    name_shortcut=params["name_shortcut"])
+
 # Synthesize the app (prepare for deployment)
 app.synth()
-
