@@ -73,7 +73,7 @@ class EcsAlbStack(Stack):
 
         ecs_security_group = ec2.SecurityGroup(
             self,
-            "SecurityGroupApp",
+            "SecurityGroupEcs",
             vpc=vpc,
             allow_all_outbound=True,
             description="Security Group for the workshop ECS cluster.",
@@ -92,7 +92,7 @@ class EcsAlbStack(Stack):
 
         alb_security_group = ec2.SecurityGroup(
             self,
-            "SecurityGroupApp",
+            "SecurityGroupAlb",
             vpc=vpc,
             allow_all_outbound=True,
             description="Security Group for the workshop ALB.",
