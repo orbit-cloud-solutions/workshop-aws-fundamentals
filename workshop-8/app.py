@@ -13,7 +13,7 @@ params = {
     "table_class": "STANDARD_INFREQUENT_ACCESS",
     "partition_key_name": "ProductID",
     "partition_key_type": "S",
-    "certificate_arn":"arn:aws:acm:eu-central-1:108782094079:certificate/ec7277ab-dc7f-4150-a60f-87483bfdbcc1",
+    "api_certificate_arn":"arn:aws:acm:eu-central-1:108782094079:certificate/96afe745-c6cf-484f-8251-85dcf0971ab2",
     "route53_zone_id":"Z08708682948NVKMBZ5GR",
     "route53_zone_name":"workshop.virtualcomputing.cz",
 }
@@ -47,7 +47,7 @@ apigatewayStack = ApiGatewayStack(
     app,
     apigateway_stack_name,
     name_shortcut=params["name_shortcut"],
-    certificate_arn=params["certificate_arn"],
+    api_certificate_arn=params["api_certificate_arn"],
     route53_zone_id=params["route53_zone_id"],
     route53_zone_name=params["route53_zone_name"]
 )

@@ -12,7 +12,7 @@ from constructs import Construct
 class ApiGatewayStack(Stack):
 
     def __init__(self, scope: Construct, construct_id: str, 
-                 name_shortcut: str, certificate_arn: str, route53_zone_id: str, route53_zone_name: str, **kwargs) -> None:
+                 name_shortcut: str, api_certificate_arn: str, route53_zone_id: str, route53_zone_name: str, **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
 
         # Import lambdafunctions ARNs from LambdaStack 
@@ -45,7 +45,7 @@ class ApiGatewayStack(Stack):
             domain_name=apigateway.DomainNameOptions(
                 domain_name=f"{name_shortcut}.api.{route53_zone_name}", # i.e fika.api.workshop.virtualcomputing.cz
                 certificate=acm.Certificate.from_certificate_arn(
-                    self, "cert", certificate_arn
+                    self, "cert", api_certificate_arn
                 ),
                 endpoint_type=apigateway.EndpointType.REGIONAL,
             ),
