@@ -29,7 +29,7 @@ class ApiGatewayStack(Stack):
         options_lambda = _lambda.Function.from_function_arn(self, "Options", options_lambda_arn)
         update_lambda = _lambda.Function.from_function_arn(self, "Update", update_lambda_arn)
         
-        apigateway_name = f"wksp-{name_shortcut}-api-cdk"
+        apigateway_name = f"wksp-{name_shortcut}-product-api-cdk"
 
         # define API gateway:
         api = apigateway.LambdaRestApi(
@@ -52,14 +52,27 @@ class ApiGatewayStack(Stack):
             disable_execute_api_endpoint=True,
         )
 
+        # Add root resource method
+        api.root.add_method(
+            "GET",
+            apigateway.LambdaIntegration(list_lambda)
+        )
+        api.root.add_method(
+            "OPTIONS",
+            apigateway.LambdaIntegration(options_lambda)
+        )
+
+        # Add a sub-resource for product ID
         productid_resource = api.root.add_resource("{ProductID}")
 
+        # Helper function to add methods to resources
         def add_method(resource, method, integration=None):
             kwargs = {"http_method": method}
             if integration is not None:
                 kwargs["integration"] = integration
             resource.add_method(**kwargs)
 
+        # Define methods for the sub-resource
         methods = [
             {
                 "resource": productid_resource,
@@ -83,6 +96,7 @@ class ApiGatewayStack(Stack):
             }
         ]
 
+        # Add methods to the sub-resource
         for method in methods:
             add_method(
                 method["resource"], method["http_method"], method.get("integration")
