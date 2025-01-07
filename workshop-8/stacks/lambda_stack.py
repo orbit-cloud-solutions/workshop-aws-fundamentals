@@ -19,23 +19,23 @@ class LambdaStack(Stack):
         # Lambda function names and associated AWS managed policies
         lambda_policies = {
             'delete': [
-                iam.ManagedPolicy.from_managed_policy_arn("arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess"),
-                iam.ManagedPolicy.from_managed_policy_arn("arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole")
+                iam.ManagedPolicy.from_managed_policy_arn(self, "ManagedPolicyDDB", "arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess"),
+                iam.ManagedPolicy.from_managed_policy_arn(self, "ManagedPolicyLambda", "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole")
             ],
             'get': [
-                iam.ManagedPolicy.from_managed_policy_arn("arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess"),
-                iam.ManagedPolicy.from_managed_policy_arn("arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole")
+                iam.ManagedPolicy.from_managed_policy_arn(self, "ManagedPolicyDDB", "arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess"),
+                iam.ManagedPolicy.from_managed_policy_arn(self, "ManagedPolicyLambda", "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole")
             ],
             'list': [
-                iam.ManagedPolicy.from_managed_policy_arn("arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess"),
-                iam.ManagedPolicy.from_managed_policy_arn("arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole")
+                iam.ManagedPolicy.from_managed_policy_arn(self, "ManagedPolicyDDB", "arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess"),
+                iam.ManagedPolicy.from_managed_policy_arn(self, "ManagedPolicyLambda", "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole")
             ],
             'options': [
-                iam.ManagedPolicy.from_managed_policy_arn("arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole")
+                iam.ManagedPolicy.from_managed_policy_arn(self, "ManagedPolicyLambda", "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole")
             ],
             'update': [
-                iam.ManagedPolicy.from_managed_policy_arn("arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess"),
-                iam.ManagedPolicy.from_managed_policy_arn("arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole")
+                iam.ManagedPolicy.from_managed_policy_arn(self, "ManagedPolicyDDB", "arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess"),
+                iam.ManagedPolicy.from_managed_policy_arn(self, "ManagedPolicyLambda", "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole")
             ]
         }
 
