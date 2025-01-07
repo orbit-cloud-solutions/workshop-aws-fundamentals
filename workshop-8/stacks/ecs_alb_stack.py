@@ -26,11 +26,6 @@ class EcsAlbStack(Stack):
             cluster_name=f"wksp-{name_shortcut}-ecs-cluster-cdk",
         )
 
-        # Import the ECR repository
-        repository = ecr.Repository.from_repository_arn(
-            self, f"{name_shortcut}-ecr-repo", ecr_repository_arn
-        )
-
         ecs_execution_role = iam.Role(
             scope=self,
             id="CoreECSExecutionRole",
@@ -54,4 +49,14 @@ class EcsAlbStack(Stack):
             log_group_name=f"wksp-{name_shortcut}-ecs-log-group-cdk",
             retention=logs.RetentionDays.ONE_DAY,
             removal_policy=RemovalPolicy.DESTROY,
+        )
+
+        task_definition = ecs.FargateTaskDefinition(
+            self,
+            "ECSTaskDefinition",
+            family=f"wksp-{name_shortcut}-ecs-task-def-cdk",
+            memory_limit_mib=int(512),
+            cpu=int(256),
+            execution_role=ecs_execution_role,
+            task_role=ecs_execution_role,
         )
