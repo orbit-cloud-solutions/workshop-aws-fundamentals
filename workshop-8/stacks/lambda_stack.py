@@ -5,7 +5,8 @@ from aws_cdk import (
     aws_iam as iam,
     aws_logs as logs,
     RemovalPolicy,
-    Fn
+    Fn,
+    CfnOutput
 )
 from constructs import Construct
 
@@ -13,7 +14,7 @@ class LambdaStack(Stack):
     def __init__(self, scope: Construct, construct_id: str, name_shortcut: str, **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
 
-         # Import the DDB name from the DynamoDbStack 
+        # Import the DDB name from the DynamoDbStack 
         ddb_table_name = Fn.import_value(f"wksp-{name_shortcut}-ddb-cdk-stack-table-name")
         
         # Lambda function names and associated AWS managed policies
@@ -64,7 +65,7 @@ class LambdaStack(Stack):
             lambda_role.add_managed_policy(policy)
 
         # Create the Lambda function
-        _lambda.Function(self, f"{lambda_name}-lambda-function",
+        lambda_function = _lambda.Function(self, f"{lambda_name}-lambda-function",
             function_name=function_name,
             runtime=_lambda.Runtime.PYTHON_3_13,
             handler="app.lambda_handler",  # Assuming the handler is named 'lambda_handler' in each 'app.py'
@@ -76,3 +77,6 @@ class LambdaStack(Stack):
 
         # Grant Lambda permissions to write logs to its respective CloudWatch log group
         log_group.grant_write(lambda_role)
+
+        # Create Output
+        CfnOutput(self, f"{lambda_name}-lambda-function-arn", value=lambda_function.function_arn, export_name=f"wksp-{name_shortcut}-lambda-cdk-stack-{lambda_name}-function-arn")
