@@ -169,7 +169,9 @@ class EcsAlbStack(Stack):
                 user_pool_client=cognito.UserPoolClient.from_user_pool_client_id(
                     self, "ImportedUserPoolClient", user_pool_client_id=cognito_user_pool_client_id
                 ),
-                user_pool_domain=cognito_user_pool_domain,
+                user_pool_domain=cognito.UserPoolDomain.from_domain_name(
+                    self, "ImportedUserPoolDomain", user_pool_domain_name=cognito_user_pool_domain
+                ),
                 session_timeout=Duration.hours(8),
                 next=elbv2.ListenerAction.forward([applicationTargetGroup]),
             ),

@@ -87,6 +87,7 @@ ecsAlbStack = EcsAlbStack(
 # Add dependencies between stacks
 lambdaStack.add_dependency(dynamodbStack)  # Lambda depends on DynamoDB
 apigatewayStack.add_dependency(lambdaStack)  # API Gateway depends on Lambda
+ecsAlbStack.add_dependency(cognitoStack)  # ECS/ALB depends on Cognito
 ecsAlbStack.add_dependency(apigatewayStack)  # ECS/ALB depends on API Gateway
 
 # Synthesize the app (prepare for deployment)

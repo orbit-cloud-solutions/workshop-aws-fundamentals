@@ -28,14 +28,15 @@ class CognitoStack(Stack):
         )
 
         # Specify Cognito Domain
-        cognito_domain=cognito.CognitoDomainOptions(
+        domain_options=cognito.CognitoDomainOptions(
             domain_prefix=name_shortcut,
         )
-
-        # Define Custom Domain for User Pool with Cognito
-        user_pool.add_domain(
+        
+        user_pool_domain = cognito.UserPoolDomain(
+            self,
             f"{name_shortcut}-userpooldomain",
-            cognito_domain=cognito_domain,
+            user_pool=user_pool,
+            cognito_domain=domain_options,
         )
         
         user_pool_client = cognito.UserPoolClient(
@@ -77,4 +78,4 @@ class CognitoStack(Stack):
         # Outputs
         CfnOutput(self, "CognitoUserpoolId", value=user_pool.user_pool_id, export_name=f"wksp-{name_shortcut}-cognito-cdk-stack-userpool-id")
         CfnOutput(self, "CognitoUserpoolClientId", value=user_pool_client.user_pool_client_id, export_name=f"wksp-{name_shortcut}-cognito-cdk-stack-userpool-client-id")
-        CfnOutput(self, "CognitoUserpoolDomain", value=f"https://{name_shortcut}.auth.eu-central-1.amazoncognito.com", export_name=f"wksp-{name_shortcut}-cognito-cdk-stack-domain")
+        CfnOutput(self, "CognitoUserpoolDomain", value=user_pool_domain.domain_name, export_name=f"wksp-{name_shortcut}-cognito-cdk-stack-domain")
