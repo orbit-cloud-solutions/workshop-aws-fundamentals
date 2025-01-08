@@ -13,8 +13,7 @@ from constructs import Construct
 
 class EcsAlbStack(Stack):
     def __init__(self, scope: Construct, construct_id: str, 
-                 name_shortcut: str, ecr_repository_arn: str, container_uri: str,
-                 container_port: int, app_certificate_arn: str, vpc_id: str, **kwargs) -> None:
+                 name_shortcut: str, container_uri: str, app_certificate_arn: str, vpc_id: str, **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
 
         # Import the API Gateway URL from the ApiGatewayStack 
@@ -138,7 +137,30 @@ class EcsAlbStack(Stack):
             port=443,
             open=True,
             ssl_policy=elbv2.SslPolicy.TLS13_RES,
-            default_target_groups=applicationTargetGroup,
+            default_target_groups=[applicationTargetGroup],
             certificates=[elbv2.ListenerCertificate.from_arn(app_certificate_arn)],
             protocol=elbv2.ApplicationProtocol.HTTPS,
+        )
+
+        # Add ECS service to the target group
+        service.attach_to_application_target_group(applicationTargetGroup)
+
+        # Allow ALB to communicate with the ECS service security group
+        ecs_security_group.add_ingress_rule(
+            alb_security_group,
+            ec2.Port.tcp(80),
+            "Allow traffic from ALB to ECS service"
+        )
+        
+        # Allow public access to ALB
+        alb_security_group.add_ingress_rule(
+            ec2.Peer.any_ipv4(),
+            ec2.Port.tcp(443),
+            "Allow HTTPS traffic from anywhere"
+        )
+        
+        alb_security_group.add_ingress_rule(
+            ec2.Peer.any_ipv4(),
+            ec2.Port.tcp(80),
+            "Allow HTTP traffic from anywhere (redirects to HTTPS)"
         )

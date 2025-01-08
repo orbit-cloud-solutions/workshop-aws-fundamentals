@@ -18,9 +18,7 @@ params = {
     "api_certificate_arn":"arn:aws:acm:eu-central-1:108782094079:certificate/96afe745-c6cf-484f-8251-85dcf0971ab2",
     "route53_zone_id":"Z08708682948NVKMBZ5GR",
     "route53_zone_name":"workshop.virtualcomputing.cz",
-    "ecr_repository_arn":"arn:aws:ecr:eu-central-1:108782094079:repository/wksp/frontend",
     "container_uri":"108782094079.dkr.ecr.eu-central-1.amazonaws.com/wksp/frontend:latest",
-    "container_port":8080,
     "app_certificate_arn":"arn:aws:acm:eu-central-1:108782094079:certificate/5dad3efe-c1a2-4676-8cd4-6b9ac9e53ef7",
     "vpc_id":"vpc-00188a5ec2e264a84"
 }
@@ -69,9 +67,7 @@ ecsAlbStack = EcsAlbStack(
     ecs_alb_stack_name,
     env=env,
     name_shortcut=params["name_shortcut"],
-    ecr_repository_arn=params["ecr_repository_arn"],
     container_uri=params["container_uri"],
-    container_port=params["container_port"],
     app_certificate_arn=params["app_certificate_arn"],
     vpc_id=params["vpc_id"]
 )
