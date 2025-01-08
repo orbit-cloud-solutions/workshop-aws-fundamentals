@@ -19,6 +19,7 @@ params = {
     "route53_zone_id":"Z08708682948NVKMBZ5GR",
     "route53_zone_name":"workshop.virtualcomputing.cz",
     "container_uri":"108782094079.dkr.ecr.eu-central-1.amazonaws.com/wksp/frontend:latest",
+    #"container_uri":"108782094079.dkr.ecr.eu-central-1.amazonaws.com/kavr/frontend:latest",
     "app_certificate_arn":"arn:aws:acm:eu-central-1:108782094079:certificate/5dad3efe-c1a2-4676-8cd4-6b9ac9e53ef7",
     "vpc_id":"vpc-00188a5ec2e264a84"
 }

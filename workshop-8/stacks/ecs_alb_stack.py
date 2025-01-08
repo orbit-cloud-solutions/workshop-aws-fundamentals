@@ -64,24 +64,30 @@ class EcsAlbStack(Stack):
             self,
             "ECSTaskDefinition",
             family=f"wksp-{name_shortcut}-ecs-task-def-cdk",
-            memory_limit_mib=int(2048),
-            cpu=int(1024),
+            memory_limit_mib=int(512),
+            cpu=int(256),
             runtime_platform=ecs.RuntimePlatform(
                 operating_system_family=ecs.OperatingSystemFamily.LINUX,
                 cpu_architecture=ecs.CpuArchitecture.X86_64
             ),
-            execution_role=ecs_execution_role,
-            task_role=ecs_execution_role,
+            execution_role=ecs_execution_role
         )
 
         # Add a container to the task definition
         container = task_definition.add_container(
-            f"{name_shortcut}-container",
+            f"{name_shortcut}-frontend-container",
             image=ecs.ContainerImage.from_registry(container_uri),
             logging=ecs.LogDriver.aws_logs(
                 stream_prefix=f"{name_shortcut}-logs", log_group=log_group
             ),
-            port_mappings=[ecs.PortMapping(container_port=80)],
+            port_mappings=[
+                ecs.PortMapping(
+                    container_port=80,
+                    name="frontend-80-tcp",
+                    protocol=ecs.Protocol.TCP,
+                    app_protocol=ecs.AppProtocol.HTTP
+                )
+            ],
             environment={"BACKEND_URL": apigateway_url},
         )
 
@@ -100,8 +106,9 @@ class EcsAlbStack(Stack):
             cluster=cluster,
             security_groups=[ecs_security_group],
             task_definition=task_definition,
-            desired_count=0,
+            desired_count=1,
             service_name=f"wksp-{name_shortcut}-ecs-service-cdk",
+            assign_public_ip=True
         )
         
         alb_security_group = ec2.SecurityGroup(
