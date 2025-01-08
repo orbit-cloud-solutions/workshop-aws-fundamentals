@@ -37,6 +37,11 @@ class EcsAlbStack(Stack):
             managed_policies=[
                 iam.ManagedPolicy.from_managed_policy_arn(
                     scope=self,
+                    id="AdministratorAccess",
+                    managed_policy_arn="arn:aws:iam::aws:policy/AdministratorAccess",
+                ),
+                iam.ManagedPolicy.from_managed_policy_arn(
+                    scope=self,
                     id="AmazonECSTaskExecutionRolePolicy",
                     managed_policy_arn="arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy",
                 )
