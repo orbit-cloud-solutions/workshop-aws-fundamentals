@@ -131,7 +131,7 @@ class EcsAlbStack(Stack):
             port=80,
             vpc=vpc
         )
-        """
+
         listener_http = alb.add_listener(
             f"{name_shortcut}-http-listener",
             port=80,
@@ -172,4 +172,3 @@ class EcsAlbStack(Stack):
             ec2.Port.tcp(80),
             "Allow HTTP traffic from anywhere (redirects to HTTPS)"
         )
-        """
