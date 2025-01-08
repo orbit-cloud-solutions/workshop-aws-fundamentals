@@ -3,6 +3,7 @@ import aws_cdk as cdk
 from stacks.dynamodb_stack import DynamoDbStack
 from stacks.lambda_stack import LambdaStack
 from stacks.apigateway_stack import ApiGatewayStack
+from stacks.cognito_stack import CognitoStack
 from stacks.ecs_alb_stack import EcsAlbStack
 
 # Define parameters directly in app.py as a config
@@ -31,6 +32,7 @@ env = cdk.Environment(account=params["aws_account"], region=params["aws_region"]
 ddb_stack_name = f"wksp-{params['name_shortcut']}-ddb-cdk-stack"
 lambda_stack_name = f"wksp-{params['name_shortcut']}-lambda-cdk-stack"
 apigateway_stack_name = f"wksp-{params['name_shortcut']}-apigateway-cdk-stack"
+cognito_stack_name = f"wksp-{params['name_shortcut']}-cognito-cdk-stack"
 ecs_alb_stack_name = f"wksp-{params['name_shortcut']}-ecs-alb-cdk-stack"
 
 dynamodbStack = DynamoDbStack(
@@ -59,6 +61,14 @@ apigatewayStack = ApiGatewayStack(
     name_shortcut=params["name_shortcut"],
     api_certificate_arn=params["api_certificate_arn"],
     route53_zone_id=params["route53_zone_id"],
+    route53_zone_name=params["route53_zone_name"]
+)
+
+cognitoStack = CognitoStack(
+    app,
+    cognito_stack_name,
+    env=env,
+    name_shortcut=params["name_shortcut"],
     route53_zone_name=params["route53_zone_name"]
 )
 
