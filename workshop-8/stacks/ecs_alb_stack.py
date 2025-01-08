@@ -113,14 +113,6 @@ class EcsAlbStack(Stack):
             load_balancer_name=f"wksp-{name_shortcut}-alb-cdk",
             security_group = alb_security_group
         )
-
-        # Add a listener for HTTP (80) with redirection to HTTPS
-        alb.add_redirect(
-            source_protocol=elbv2.ApplicationProtocol.HTTP,
-            source_port=80,
-            target_protocol=elbv2.ApplicationProtocol.HTTPS,
-            target_port=443,
-        )
         
         applicationTargetGroup = elbv2.ApplicationTargetGroup(
             self,
