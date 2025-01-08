@@ -85,7 +85,7 @@ class EcsAlbStack(Stack):
                     container_port=80,
                     name="frontend-80-tcp",
                     protocol=ecs.Protocol.TCP,
-                    app_protocol=ecs.AppProtocol.HTTP
+                    app_protocol=ecs.AppProtocol.http
                 )
             ],
             environment={"BACKEND_URL": apigateway_url},
