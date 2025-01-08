@@ -136,7 +136,6 @@ class EcsAlbStack(Stack):
             f"{name_shortcut}-http-listener",
             port=80,
             open=True,
-            ssl_policy=elbv2.SslPolicy.TLS13_RES,
             default_target_groups=[applicationTargetGroup],
             protocol=elbv2.ApplicationProtocol.HTTP,
         )
