@@ -64,8 +64,12 @@ class EcsAlbStack(Stack):
             self,
             "ECSTaskDefinition",
             family=f"wksp-{name_shortcut}-ecs-task-def-cdk",
-            memory_limit_mib=int(512),
-            cpu=int(256),
+            memory_limit_mib=int(2048),
+            cpu=int(1024),
+            runtime_platform=ecs.RuntimePlatform(
+                operating_system_family=ecs.OperatingSystemFamily.LINUX,
+                cpu_architecture=ecs.CpuArchitecture.X86_64
+            ),
             execution_role=ecs_execution_role,
             task_role=ecs_execution_role,
         )
