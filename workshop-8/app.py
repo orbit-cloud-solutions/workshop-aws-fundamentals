@@ -10,7 +10,7 @@ from stacks.ecs_alb_stack import EcsAlbStack
 params = {
     "aws_account": "108782094079",
     "aws_region": "eu-central-1",
-    "name_shortcut": "fika",
+    "name_shortcut": "fika", # UPDATE ME
     "table_name": "product",
     "billing_mode": "PAY_PER_REQUEST",
     "table_class": "STANDARD_INFREQUENT_ACCESS",
