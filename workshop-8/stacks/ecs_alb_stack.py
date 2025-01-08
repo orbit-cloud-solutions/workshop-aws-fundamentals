@@ -124,15 +124,24 @@ class EcsAlbStack(Stack):
         
         applicationTargetGroup = elbv2.ApplicationTargetGroup(
             self,
-            "TargetGroupECS",
+            f"{name_shortcut}-ecs-service-tg",
             target_type=elbv2.TargetType.IP,
-            target_group_name=f"wksp-{name_shortcut}-alb-tg-cdk",
+            target_group_name=f"wksp-{name_shortcut}-ecs-service-tg-cdk",
             protocol=elbv2.ApplicationProtocol.HTTP,
             port=80,
             vpc=vpc
         )
         
-        listener = alb.add_listener(
+        listener_http = alb.add_listener(
+            f"{name_shortcut}-http-listener",
+            port=80,
+            open=True,
+            ssl_policy=elbv2.SslPolicy.TLS13_RES,
+            default_target_groups=[applicationTargetGroup],
+            protocol=elbv2.ApplicationProtocol.HTTP,
+        )
+
+        listener_https = alb.add_listener(
             f"{name_shortcut}-https-listener",
             port=443,
             open=True,
