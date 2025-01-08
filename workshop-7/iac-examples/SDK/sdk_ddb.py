@@ -132,7 +132,7 @@ def lambda_handler(event, context):
         else:
             raise ValueError(f"Invalid Action specified: {action}")
 
-        return response
+        return 'OK'
     except Exception as e:
         logger.error(f"Error in Lambda function: {str(e)}")
         return {"statusCode": 500, "body": f"Error: {str(e)}"}
