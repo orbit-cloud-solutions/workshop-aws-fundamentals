@@ -49,7 +49,7 @@ class CognitoStack(Stack):
             ],
             o_auth=cognito.OAuthSettings(
                 callback_urls=[
-                    f"https://{name_shortcut}.app.{route53_zone_name}"
+                    f"https://{name_shortcut}.app.{route53_zone_name}/oauth2/idpresponse"
                 ],
                 scopes=[
                         cognito.OAuthScope.EMAIL,
