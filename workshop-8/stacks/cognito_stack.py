@@ -15,7 +15,7 @@ class CognitoStack(Stack):
         user_pool = cognito.UserPool(
             self,
             f"{name_shortcut}-userpool",
-            user_pool_name=f"wksp-{name_shortcut}-userpool-cdk",
+            user_pool_name=f"wksp-{name_shortcut}-cognito-userpool-cdk",
             self_sign_up_enabled=False,
             sign_in_case_sensitive=False,
             sign_in_aliases=cognito.SignInAliases(email=True),
@@ -24,6 +24,17 @@ class CognitoStack(Stack):
                 "pid": cognito.StringAttribute(min_len=6, max_len=6, mutable=True)
             },
             removal_policy=RemovalPolicy.DESTROY,
+        )
+
+        # Specify Cognito Domain
+        cognito_domain=cognito.CognitoDomainOptions(
+            domain_prefix=name_shortcut,
+        )
+
+        # Define Custom Domain for User Pool with Cognito
+        user_pool.add_domain(
+            f"{name_shortcut}-userpooldomain",
+            cognito_domain=cognito_domain,
         )
         
         user_pool_client = cognito.UserPoolClient(
