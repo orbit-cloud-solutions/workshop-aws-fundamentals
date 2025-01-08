@@ -36,7 +36,8 @@ class LambdaStack(Stack):
         }
 
         for name, policies in lambda_policies.items():
-            self.create_lambda(name_shortcut, name, policies, ddb_table_name)
+            lambda_function = self.create_lambda(name_shortcut, name, policies, ddb_table_name)
+            self.add_lambda_permission(lambda_function, name)
 
     def create_lambda(self, name_shortcut: str, lambda_name: str, policies: list, ddb_table_name: str):
         function_name = f"wksp-{name_shortcut}-{lambda_name}-lambda-cdk"
@@ -80,3 +81,12 @@ class LambdaStack(Stack):
 
         # Create Output
         CfnOutput(self, f"{lambda_name}-lambda-function-arn", value=lambda_function.function_arn, export_name=f"wksp-{name_shortcut}-lambda-cdk-stack-{lambda_name}-function-arn")
+
+        return lambda_function
+
+    def add_lambda_permission(self, lambda_function: _lambda.IFunction, lambda_name: str):
+        lambda_function.add_permission(
+            f"{lambda_name}-lambda-api-gw-invoke-permissions",
+            action="lambda:InvokeFunction",
+            principal=iam.ServicePrincipal("apigateway.amazonaws.com")
+        )
