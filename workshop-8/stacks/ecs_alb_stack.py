@@ -6,14 +6,16 @@ from aws_cdk import (
     aws_iam as iam,
     aws_logs as logs,
     Fn,
-    aws_elasticloadbalancingv2 as elbv2
+    aws_elasticloadbalancingv2 as elbv2,
+    aws_route53 as route53,
+    aws_route53_targets as targets
 )
 from constructs import Construct
 
 
 class EcsAlbStack(Stack):
     def __init__(self, scope: Construct, construct_id: str, 
-                 name_shortcut: str, container_uri: str, app_certificate_arn: str, vpc_id: str, **kwargs) -> None:
+                 name_shortcut: str, container_uri: str, app_certificate_arn: str, vpc_id: str, route53_zone_id: str, route53_zone_name: str, **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
 
         # Import the API Gateway URL from the ApiGatewayStack 
@@ -179,4 +181,21 @@ class EcsAlbStack(Stack):
             ec2.Peer.any_ipv4(),
             ec2.Port.tcp(80),
             "Allow HTTP traffic from anywhere (redirects to HTTPS)"
+        )
+
+        # add route 53 record:
+        zone = route53.HostedZone.from_hosted_zone_attributes(
+            self,
+            "existing-zone",
+            hosted_zone_id=route53_zone_id,
+            zone_name=route53_zone_name,
+        )
+
+        # Create a Route 53 A record pointing to the ALB
+        route53.ARecord(
+            self,
+            f"{name_shortcut}-alb-record",
+            record_name=f"{name_shortcut}.app",  # Replace with your desired subdomain
+            target=route53.RecordTarget.from_alias(targets.LoadBalancerTarget(alb)),
+            zone=zone,
         )

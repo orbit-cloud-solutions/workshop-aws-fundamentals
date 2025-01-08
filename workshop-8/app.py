@@ -19,7 +19,6 @@ params = {
     "route53_zone_id":"Z08708682948NVKMBZ5GR",
     "route53_zone_name":"workshop.virtualcomputing.cz",
     "container_uri":"108782094079.dkr.ecr.eu-central-1.amazonaws.com/wksp/frontend:latest",
-    #"container_uri":"108782094079.dkr.ecr.eu-central-1.amazonaws.com/kavr/frontend:latest",
     "app_certificate_arn":"arn:aws:acm:eu-central-1:108782094079:certificate/5dad3efe-c1a2-4676-8cd4-6b9ac9e53ef7",
     "vpc_id":"vpc-00188a5ec2e264a84"
 }
@@ -70,8 +69,15 @@ ecsAlbStack = EcsAlbStack(
     name_shortcut=params["name_shortcut"],
     container_uri=params["container_uri"],
     app_certificate_arn=params["app_certificate_arn"],
-    vpc_id=params["vpc_id"]
+    vpc_id=params["vpc_id"],
+    route53_zone_id=params["route53_zone_id"],
+    route53_zone_name=params["route53_zone_name"]
 )
+
+# Add dependencies between stacks
+lambdaStack.add_dependency(dynamodbStack)  # Lambda depends on DynamoDB
+apigatewayStack.add_dependency(lambdaStack)  # API Gateway depends on Lambda
+ecsAlbStack.add_dependency(apigatewayStack)  # ECS/ALB depends on API Gateway
 
 # Synthesize the app (prepare for deployment)
 app.synth()
