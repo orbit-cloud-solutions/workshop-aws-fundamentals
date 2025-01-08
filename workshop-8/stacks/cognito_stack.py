@@ -49,15 +49,10 @@ class CognitoStack(Stack):
                 callback_urls=[
                     f"https://{name_shortcut}.app.{route53_zone_name}"
                 ],
-                logout_urls=[
-                    f"https://{name_shortcut}.app.{route53_zone_name}"
-                ],
                 scopes=[
                         cognito.OAuthScope.EMAIL,
                         cognito.OAuthScope.OPENID,
-                        cognito.OAuthScope.PROFILE,
-                        cognito.OAuthScope.COGNITO_ADMIN,
-                    ],
+                        cognito.OAuthScope.PHONE,                    ],
                 flows=cognito.OAuthFlows(
                     implicit_code_grant=True,
                     authorization_code_grant=True,
@@ -66,8 +61,14 @@ class CognitoStack(Stack):
             generate_secret=True,
             prevent_user_existence_errors=True,
             enable_token_revocation=True,
-            auth_flows=cognito.AuthFlow(user_srp=True, custom=True),
-            refresh_token_validity=Duration.days(30),
+            auth_flows=cognito.AuthFlow(user_srp=True, user=True),
+            refresh_token_validity=Duration.days(5),
             access_token_validity=Duration.minutes(60),
             id_token_validity=Duration.minutes(60),
+        )
+
+        cfn_managed_login_branding = cognito.CfnManagedLoginBranding(self, f"{name_shortcut}-ManagedLoginBranding",
+            user_pool_id=user_pool.user_pool_id,
+            client_id=user_pool_client.user_pool_client_id,
+            use_cognito_provided_values=True
         )
