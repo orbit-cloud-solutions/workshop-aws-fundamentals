@@ -2,7 +2,8 @@ from aws_cdk import (
     Stack,
     aws_cognito as cognito,
     RemovalPolicy,
-    Duration
+    Duration,
+    CfnOutput
 )
 from constructs import Construct
 
@@ -72,3 +73,8 @@ class CognitoStack(Stack):
             client_id=user_pool_client.user_pool_client_id,
             use_cognito_provided_values=True
         )
+
+        # Outputs
+        CfnOutput(self, "CognitoUserpoolId", value=user_pool.user_pool_id, export_name=f"wksp-{name_shortcut}-cognito-cdk-stack-userpool-id")
+        CfnOutput(self, "CognitoUserpoolClientId", value=user_pool_client.user_pool_client_id, export_name=f"wksp-{name_shortcut}-cognito-cdk-stack-userpool-client-id")
+        CfnOutput(self, "CognitoUserpoolDomain", value=f"https://{name_shortcut}.auth.eu-central-1.amazoncognito.com", export_name=f"wksp-{name_shortcut}-cognito-cdk-stack-domain")

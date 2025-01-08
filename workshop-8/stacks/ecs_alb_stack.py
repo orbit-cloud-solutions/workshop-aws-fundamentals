@@ -6,9 +6,12 @@ from aws_cdk import (
     aws_iam as iam,
     aws_logs as logs,
     Fn,
+    Duration,
     aws_elasticloadbalancingv2 as elbv2,
+    aws_elasticloadbalancingv2_actions as actions,
     aws_route53 as route53,
-    aws_route53_targets as targets
+    aws_route53_targets as targets,
+    aws_cognito as cognito
 )
 from constructs import Construct
 
@@ -20,6 +23,10 @@ class EcsAlbStack(Stack):
 
         # Import the API Gateway URL from the ApiGatewayStack 
         apigateway_url = Fn.import_value(f"wksp-{name_shortcut}-apigateway-cdk-stack-url")
+        # Import cognito values from CognitoStack
+        cognito_user_pool_id = Fn.import_value(f"wksp-{name_shortcut}-cognito-cdk-stack-userpool-id")
+        cognito_user_pool_client_id = Fn.import_value(f"wksp-{name_shortcut}-cognito-cdk-stack-userpool-client-id")
+        cognito_user_pool_domain = Fn.import_value(f"wksp-{name_shortcut}-cognito-cdk-stack-domain")
 
         # Fetch the existing VPC
         vpc = ec2.Vpc.from_lookup(self, "ExistingVpc", vpc_id=vpc_id)
@@ -155,7 +162,17 @@ class EcsAlbStack(Stack):
             port=443,
             open=True,
             ssl_policy=elbv2.SslPolicy.TLS13_RES,
-            default_target_groups=[applicationTargetGroup],
+            default_action=actions.AuthenticateCognitoAction(
+                user_pool=cognito.UserPool.from_user_pool_id(
+                    self, "ImportedUserPool", user_pool_id=cognito_user_pool_id
+                ),
+                user_pool_client=cognito.UserPoolClient.from_user_pool_client_id(
+                    self, "ImportedUserPoolClient", user_pool_client_id=cognito_user_pool_client_id
+                ),
+                user_pool_domain=cognito_user_pool_domain,
+                session_timeout=Duration.hours(8),
+                next=elbv2.ListenerAction.forward([applicationTargetGroup]),
+            ),
             certificates=[elbv2.ListenerCertificate.from_arn(app_certificate_arn)],
             protocol=elbv2.ApplicationProtocol.HTTPS,
         )
