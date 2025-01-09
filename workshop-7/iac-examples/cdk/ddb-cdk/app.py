@@ -15,7 +15,7 @@ params = {
 # Create an app instance
 app = cdk.App()
 
-ddb_stack_name = f"wksp-{params['name_shortcut']}-ddb-cdk-stack"
+ddb_stack_name = f"wksp-7-{params['name_shortcut']}-ddb-cdk-stack"
 
 # Pass the params directly to the DdbCdkStack
 DdbCdkStack(
