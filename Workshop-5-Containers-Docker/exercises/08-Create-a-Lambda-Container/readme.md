@@ -1,14 +1,14 @@
-# Exercise 8 - create container for Lambda function
+# Exercise 8 - Create a Lambda Container
 
-## login to EC2
+## Login to EC2
     * login as ec2-user@<ip_address>
     * sudo su -
 
-## download exercises
+## Download exercises
     * yum install git
     * git clone https://github.com/orbit-cloud-solutions/workshops-aws-fundamentals-code-base.git
 
-## exercise 08
+## Exercise 08
     * cd workshops-aws-fundamentals-code-base/workshop-05/exercises/08
     * docker build -t lambda . # installs python and AWS Runtime Interface Client
     * cat app/index.py # this is Lambda handler
@@ -16,6 +16,6 @@
     * curl -XPOST "http://localhost:9000/2015-03-31/functions/function/invocations" -d '{}'
     * it should respond
 
-## cleanup
+## Cleanup
     * docker stop lambda
     * docker rm lambda

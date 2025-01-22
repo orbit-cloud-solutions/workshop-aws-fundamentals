@@ -1,6 +1,6 @@
-# Exercise 1 - basic docker
+# Exercise 1 - Docker Basics
 
-## create/start EC2 instance
+## Create/start EC2 instance
     * upload public key wksp-kavr-ec2-instance-kp
     * wksp-kavr-ec2-instance
     * t3a.micro
@@ -14,12 +14,12 @@
         * port 80/tcp from our public IP address
     * 8GB storage is OK
 
-## install docker
+## Install docker
     * $ sudo su -
     * # yum update && yum install docker
     * # systemctl start docker
     * # systemctl enable docker
 
-## run first container
+## Run your first container
     * docker run hello-world # it automatically does 'docker pull' if needed
     * docker images

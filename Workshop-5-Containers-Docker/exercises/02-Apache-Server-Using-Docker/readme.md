@@ -1,14 +1,14 @@
-# Exercise 2 - using Docker to run website using Apache web server
+# Exercise 2 - Run an Apache Server Using Docker
 
-## login to EC2
+## Login to EC2
     * login as ec2-user@<ip_address>
     * sudo su -
 
-## download exercises
+## Download exercises
     * yum install git
     * git clone https://github.com/orbit-cloud-solutions/workshops-aws-fundamentals-code-base.git
 
-## exercise 02
+## Build an Apache server
     * cd workshops-aws-fundamentals-code-base/workshop-05/exercises/02
     * cat Dockerfile
     * docker build -t apache . # the dot is important
@@ -19,7 +19,7 @@
     * open public IP address in your browser
     * docker logs apache # displays container log
 
-## stop docker
+## Stop Docker
     * docker stop apache
     * docker ps # no longer running
     * docker ps -a # but we have some stopped containers

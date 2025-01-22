@@ -1,14 +1,14 @@
-# Exercise 7 - backing up container images and containers
+# Exercise 7 - Backing Up Containers and Images
 
-## login to EC2
+## Login to EC2
     * login as ec2-user@<ip_address>
     * sudo su -
 
-## download exercises
+## Download exercises
     * yum install git
     * git clone https://github.com/orbit-cloud-solutions/workshops-aws-fundamentals-code-base.git
 
-## exercise 07
+## Exercise 07
     * cd workshops-aws-fundamentals-code-base/workshop-05/exercises/07
     * docker run --name apache -d -p 80:80 -v $(pwd)/html:/usr/local/apache2/htdocs/ httpd:latest
     * open your public ip address/hostname in web browser
@@ -20,10 +20,10 @@
     * docker save apache:saved | gzip > httpd_saved.tgz # we have container backup now
     * ll -h
 
-## stop
+## Stop
     * docker stop apache
 
-## bonus
+## Bonus
     * if you want to restore from backup, you can use:
     * docker load < httpd_saved.tgz # to create docker image from archive
     * docker run... # to run it again

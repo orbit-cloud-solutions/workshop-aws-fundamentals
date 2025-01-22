@@ -1,14 +1,14 @@
-# Exercise 5 - hosting React frontend
+# Exercise 5 - Hosting a React Frontend
 
-## login to EC2
+## Login to EC2
     * login as ec2-user@<ip_address>
     * sudo su -
 
-## download exercises
+## Download exercises
     * yum install git
     * git clone https://github.com/orbit-cloud-solutions/workshops-aws-fundamentals-code-base.git
 
-## exercise 05
+## Exercise 05
     * cd workshops-aws-fundamentals-code-base/workshop-05/exercises/05
     * cat Dockerfile
     * docker build -t frontend . # the dot is important
@@ -16,5 +16,5 @@
     * docker run -d --name frontend -p 80:80 frontend
     * open your public IP address/hostname in browser
 
-## stoppping the container
+## Stoppping the container
     * docker stop frontend

@@ -1,14 +1,14 @@
-# Exercise 3 - interactive Docker, logs
+# Exercise 3 - Interactive Docker and Logs
 
-## login to EC2
+## Login to EC2
     * login as ec2-user@<ip_address>
     * sudo su -
 
-## download exercises
+## Download exercises
     * yum install git
     * git clone https://github.com/orbit-cloud-solutions/workshops-aws-fundamentals-code-base.git
 
-## exercise 03
+## Exercise 03
     * cd workshops-aws-fundamentals-code-base/workshop-05/exercises/03
     * cat Dockerfile # it's based on Amazon Linux
     * docker build -t al . # the dot is important
@@ -22,18 +22,18 @@
     * Ctrl+D # we disconnected from our docker
     * docker ps # it's still running
 
-## stop docker
+## Stop Docker
     * docker stop al
     * docker ps # no longer running
     * docker ps -a # but we have some stopped containers
     * docker rm al
     
-## run docker again
+## Run docker again
     * docker run -it --rm --name al al # remove docker when we are finished
     * # useful for interactive short tasks
     * Ctrl+D # disconnecting from container will remove it now
 
-## cleanup
+## Cleanup
     * docker ps -a # amazon linux docker is gone
     * docker images # but its image still exists
     * docker rmi al # we can remove the image

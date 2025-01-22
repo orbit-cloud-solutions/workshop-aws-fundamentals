@@ -1,14 +1,14 @@
-# Exercise 03 - hosting React frontend in ECR
+# Exercise 03 - Host React Frontend in ECS
 
-## login to EC2
+## Login to EC2
     * login as ec2-user@<ip_address>
     * sudo su -
 
-## download exercises
+## Download exercises
     * yum install git
     * git clone https://github.com/orbit-cloud-solutions/workshops-aws-fundamentals-code-base.git
 
-## create ECS Task definition
+## Create ECS Task definition
     * AWS > ECS > Task definitions > Create new task definition
     * Task definition family: wksp-xxxx-ecs-task
     * Launch type: AWS Fargate
@@ -21,13 +21,13 @@
         * (108782094079.dkr.ecr.eu-central-1.amazonaws.com/xxx/frontend:latest)
     * Create
 
-## create ECS cluster
+## Create ECS cluster
     * AWS > ECS > Clusters > Create Cluster
     * Cluster name: wksp-xxxx-ecs-cluster
     * AWS Fargate
     * Create
 
-## create ECS service
+## Create ECS service
     * select your ECS cluster/Services
     * Create
     * Compute options: Launch Type: FARGATE/LATEST
@@ -46,7 +46,7 @@
             * Evaluation order: 1
     * Create, wait... # you can check progress in CloudFormation
 
-## check the application
+## Check the application
     * go to to your ALB https port (https://xxxx-alb.workshop.virtualcomputing.cz/)
     * go to to your ALB http port (http://xxxx-alb.workshop.virtualcomputing.cz/)
     * what happened?
